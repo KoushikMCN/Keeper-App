@@ -24,7 +24,7 @@ const Body = () => {
                     <h2 className='text-xl font-bold'>Notes</h2>
                     {
                         notes.map((note, index) => (
-                            <div key={index} className='border-2 rounded-lg border-blue-950 p-2'>
+                            <div key={index} className='border-2 rounded-lg border-blue-950 p-2 my-4'>
                                 <NoteComponent note={note} />
                             </div>
                         ))

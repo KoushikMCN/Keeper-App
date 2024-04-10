@@ -3,20 +3,13 @@ import axios from 'axios'
 
 const NoteComponent = (props) => {
     const [note, setNote] = useState()
-    const [loading, setLoading] = useState(true)
-    const [changes, setChanges] = useState({ title: '', content: '' })
-    const [changed, setChanged] = useState()
+    const [loading, setLoading] = useState(true)   
     useEffect(() => {
         setNote(props.note);
-        setChanges(props.note);
         console.log(props.note)
         setLoading(false)
     }, [props])
 
-    useEffect(() => {
-      console.log(changes)
-    }, [changes])
-    
 
     const deleteNote = async (id) => {
         console.log(id);
@@ -30,34 +23,28 @@ const NoteComponent = (props) => {
     return (
         <div>
             {!loading &&
-                <div className='m-3'>
-                    <h3 className='font-bold' contentEditable >{note.title}</h3>
-                    <textarea role='textbox' contentEditable
+                <div className='m-2'>
+                    <h3 className='font-bold'>
+                        {note.title}
+                    </h3>
+                    <div role='textbox' contentEditable
                         className='w-5/6 min-h-5 max-h-full'
-                        value={changes.content ||  note.content}
-                        onChange={(e) => {
-                            setChanges({ ...changes, content: e.target.value });
-                            setChanged(true)
-                        }}>
+                        value={note.content}>
                         {note.content}
-                        </textarea>
+                    </div>
                     <p>{note.updatedAt}</p>
-                    <div className='flex gap-4'>
+                    <div className='flex gap-2'>
                         <button onClick={() => deleteNote(note._id)} className='text-blue-500 underline'>
-                            {/* <img src={('../../public/delete-icon.png')} alt='DELETE' className='size-4' /> */}
-                            DELETE
+                            <img src={require('../assets/images/delete-icon.png')} alt='DELETE' className='size-4' />
                         </button>
                         <a href={`/note/${note._id}`}>
-                            <img src={require('../assets/images/open-icon.webp')} alt='OPEN' className='size-4 relative top-1' />
+                            <img src={require('../assets/images/open-icon.webp')} alt='OPEN' className='size-4' />
+                        </a>
+                        <a href={`/note/edit/${note._id}`}>
+                            <img src={require('../assets/images/edit-icon.png')} alt='OPEN' className='size-4' />
                         </a>
                     </div>
                 </div>
-            }
-            {
-                changed &&
-                <>
-                    <button className='border-2 border-blue-800'>SAVE</button>
-                </>
             }
         </div>
     )
